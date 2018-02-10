@@ -6,18 +6,119 @@ use Lfbn\BaseModel\AbstractBaseModel;
 use Lfbn\BaseModel\IConverter;
 use Lfbn\BaseModel\Helpers\ValidatorHelper;
 
+class User extends AbstractBaseModel
+{
+
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var float
+     */
+    protected $height;
+
+    /**
+     * @var boolean
+     */
+    protected $active;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return float
+     */
+    public function getHeight(): float
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param float $height
+     */
+    public function setHeight(float $height): void
+    {
+        $this->height = $height;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationRules()
+    {
+        return [
+            ['property' => 'id', 'validator' => 'isNotEmpty'],
+            ['property' => 'id', 'validator' => 'isInteger'],
+            ['property' => 'height', 'validator' => 'isFloat'],
+            ['property' => 'active', 'validator' => 'isBoolean']
+        ];
+    }
+}
+
 class BaseModelTest extends TestCase
 {
 
     /**
-     * @var AbstractBaseModel
+     * @var User
      */
-    protected $baseModelMock;
+    protected $userMock;
 
     public function setUp()
     {
-        $this->baseModelMock = Mockery::mock(
-            AbstractBaseModel::class
+        $this->userMock = Mockery::mock(
+            User::class
         )->makePartial();
     }
 
@@ -29,34 +130,34 @@ class BaseModelTest extends TestCase
     public function testValidatingDefaultsToTrue()
     {
         $this->assertTrue(
-            $this->baseModelMock->isValidating()
+            $this->userMock->isValidating()
         );
     }
 
     public function testValidatingSet()
     {
-        $this->baseModelMock->setValidating(false);
-        $this->assertFalse($this->baseModelMock->isValidating());
+        $this->userMock->setValidating(false);
+        $this->assertFalse($this->userMock->isValidating());
     }
 
     public function testNotValidatingValidateReturnsFalse()
     {
-        $this->baseModelMock->setValidating(false);
-        $this->assertFalse($this->baseModelMock->validate());
+        $this->userMock->setValidating(false);
+        $this->assertFalse($this->userMock->validate());
     }
 
     public function testValidatingThrowingExceptionsDefaultsToFalse()
     {
         $this->assertFalse(
-            $this->baseModelMock->isValidatingThrowingExceptions()
+            $this->userMock->isValidatingThrowingExceptions()
         );
     }
 
     public function testValidatingThrowingExceptionsSet()
     {
-        $this->baseModelMock->setValidatingThrowingExceptions(true);
+        $this->userMock->setValidatingThrowingExceptions(true);
         $this->assertTrue(
-            $this->baseModelMock->isValidatingThrowingExceptions()
+            $this->userMock->isValidatingThrowingExceptions()
         );
     }
 
@@ -67,14 +168,14 @@ class BaseModelTest extends TestCase
     {
         $validator = Mockery::Mock(ValidatorHelper::class);
         $validator->shouldReceive('isInteger')->andReturn(false);
-        $this->baseModelMock->setValidator($validator);
+        $this->userMock->setValidator($validator);
 
-        $this->baseModelMock->setData(['id' => 'test-fail']);
-        $this->baseModelMock->shouldReceive('getValidationRules')->andReturn(
+        $this->userMock->setData(['id' => 'test-fail']);
+        $this->userMock->shouldReceive('getValidationRules')->andReturn(
             [['property' => 'id', 'validator' => 'isInteger']]
         );
-        $this->baseModelMock->setValidatingThrowingExceptions(true);
-        $this->baseModelMock->validate();
+        $this->userMock->setValidatingThrowingExceptions(true);
+        $this->userMock->validate();
     }
 
     /**
@@ -84,14 +185,14 @@ class BaseModelTest extends TestCase
      */
     public function testSetDataValidateData($expected)
     {
-        $this->expectException($this->baseModelMock->setData($expected));
+        $this->expectException($this->userMock->setData($expected));
     }
 
     public function testSetData()
     {
-        $this->baseModelMock->setData(['teste' => 1]);
+        $this->userMock->setData(['teste' => 1]);
         $this->assertEquals(
-            $this->baseModelMock->teste,
+            $this->userMock->teste,
             1
         );
     }
@@ -104,9 +205,9 @@ class BaseModelTest extends TestCase
         $converterMock
             ->shouldReceive('fromObjectToArray')
             ->andReturn(['test' => 1]);
-        $this->baseModelMock->setConverter($converterMock);
+        $this->userMock->setConverter($converterMock);
         $this->assertEquals(
-            $this->baseModelMock->toArray(),
+            $this->userMock->toArray(),
             ['test' => 1]
         );
     }
