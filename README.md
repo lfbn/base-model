@@ -26,7 +26,7 @@ This is a Base Model that can be extended to define Models.
 
 You only need to extend the AbstractBaseModel and implement a public method getValidationRules. This method should return an array in the following format: ```['property' => 'id', 'validator' => 'isNotEmpty']```
 
-```
+```php
 class User extends AbstractBaseModel
 {
 
@@ -133,7 +133,7 @@ class User extends AbstractBaseModel
 
 You only need to call the ```validate()``` method
 
-```
+```php
 $user = new User();
 $user->validate();
 ```
@@ -142,7 +142,7 @@ $user->validate();
 
 Yes. It only needs to implement the interface IValidator.
 
-```
+```php
 $user = new User();
 $myValidator = new MyValidator();
 $user->setValidator($myValidator);
@@ -152,7 +152,7 @@ $user->setValidator($myValidator);
 
 Yes. It only needs to implement the interface IConverter.
 
-```
+```php
 $user = new User();
 $myConverter = new MyConverter();
 $user->setConverter($myConverter);
