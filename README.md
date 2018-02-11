@@ -18,7 +18,9 @@ This is a Base Model that can be extended to define Models.
 
 # Installation
 
-
+```
+composer require lfbn/base-model
+```
 
 # Examples
 
