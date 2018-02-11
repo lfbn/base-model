@@ -1,34 +1,36 @@
 # Base Model
 
-This is a Base Model that can be extended to define Models.
+- [Features](#features)
+- [Installation](#installation)
+- [Examples](#examples)
 
- # Features
+This is a Base Model that can be extended to define Models. It helps handling data validation, and conversion.
+
+## Features
  
- * Validation of properties. All, except the isNotEmpty, doesn't validate the data if it is empty. Are available the following validators:
-   * isNotEmpty
-   * isNumeric
-   * isInteger
-   * isFloat
-   * isString
-   * isBoolean
- * Model to array and JSON conversion, preserving hidden attributes.
- * Define attributes using arrays of data.
- * Can define, when validation fails, if an exception is thrown.
- * Can define if data should be validated or not.
+* Validation of properties. All, except the isNotEmpty, doesn't validate the data if it is empty. The following validator are available:
+  * isNotEmpty
+  * isNumeric
+  * isInteger
+  * isFloat
+  * isString
+  * isBoolean
+* Model to array and JSON conversion, preserving hidden attributes.
+* Define attributes using arrays of data.
+* Can define, when validation fails, if an exception is thrown.
+* Can define if data should be validated or not.
 
-# Installation
+## Installation
 
-```
+```bash
 composer require lfbn/base-model
 ```
 
-# Examples
+## Examples
 
-## How to use it
+### How to use it
 
-You only need to extend the AbstractBaseModel and implement a public method getValidationRules.
-
-This method should return an array with the properties and the respective validator method. Notice you can define your own method, and add it as a validator.
+Define your model extending the AbstractBaseModel. Then implement a public method getValidationRules. This method should define the properties you want to validate.
 
 ```php
 class User extends AbstractBaseModel
