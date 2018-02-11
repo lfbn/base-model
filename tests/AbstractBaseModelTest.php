@@ -212,6 +212,21 @@ class BaseModelTest extends TestCase
         );
     }
 
+    public function testToJson()
+    {
+        $converterMock = Mockery::mock(
+            IConverter::class
+        );
+        $converterMock
+            ->shouldReceive('fromObjectToJson')
+            ->andReturn('{"test":1}');
+        $this->userMock->setConverter($converterMock);
+        $this->assertEquals(
+            '{"test":1}',
+            $this->userMock->toJson()
+        );
+    }
+
     /**
      * @return array
      */

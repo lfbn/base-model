@@ -36,7 +36,6 @@ class ConverterHelper implements IConverter
     /**
      * @param $object
      * @return array
-     * @ref https://stackoverflow.com/a/37610076/155905
      */
     public function fromObjectToArray($object)
     {
@@ -44,14 +43,37 @@ class ConverterHelper implements IConverter
             return [];
         }
 
+        return $this->extractPropertiesFromObject($object);
+    }
+
+    /**
+     * @param $object
+     * @return string
+     */
+    public function fromObjectToJson($object)
+    {
+        if (empty($object) || !is_object($object)) {
+            return '';
+        }
+
+        return json_encode($this->extractPropertiesFromObject($object));
+    }
+
+    /**
+     * @param $object
+     * @return array
+     * @ref https://stackoverflow.com/a/37610076/155905
+     */
+    private function extractPropertiesFromObject($object)
+    {
         $result = [];
 
         $reflector = new \ReflectionObject($object);
-        $nodes = $reflector->getProperties();
-        foreach ($nodes as  $node) {
-            $nod=$reflector->getProperty($node->getName());
-            $nod->setAccessible(true);
-            $result[self::fromCamelCaseToSnakeCase($node->getName())]=$nod->getValue($object);
+        $properties = $reflector->getProperties();
+        foreach ($properties as $property) {
+            $refProperty = $reflector->getProperty($property->getName());
+            $refProperty->setAccessible(true);
+            $result[self::fromCamelCaseToSnakeCase($property->getName())] = $property->getValue($object);
         }
 
         return $result;

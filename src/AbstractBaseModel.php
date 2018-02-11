@@ -160,4 +160,12 @@ abstract class AbstractBaseModel
     {
         return $this->converter->fromObjectToArray($this);
     }
+
+    /**
+     * @return string
+     */
+    public function toJson()
+    {
+        return $this->converter->fromObjectToJson($this);
+    }
 }

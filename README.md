@@ -11,7 +11,7 @@ This is a Base Model that can be extended to define Models.
    * isFloat
    * isString
    * isBoolean
- * Model to array conversion, preserving hidden attributes.
+ * Model to array and JSON conversion, preserving hidden attributes.
  * Define attributes using arrays of data.
  * Can define, when validation fails, if an exception is thrown.
  * Can define if data should be validated or not.
@@ -24,7 +24,9 @@ This is a Base Model that can be extended to define Models.
 
 ## How to use it
 
-You only need to extend the AbstractBaseModel and implement a public method getValidationRules. This method should return an array in the following format: ```['property' => 'id', 'validator' => 'isNotEmpty']```
+You only need to extend the AbstractBaseModel and implement a public method getValidationRules.
+
+This method should return an array with the properties and the respective validator method. Notice you can define your own method, and add it as a validator.
 
 ```php
 class User extends AbstractBaseModel

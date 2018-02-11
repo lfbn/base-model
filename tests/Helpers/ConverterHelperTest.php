@@ -47,6 +47,21 @@ class ConverterHelperTest extends TestCase
         );
     }
 
+    public function testFromObjectToJson()
+    {
+        $object = new \stdClass();
+        $object->id = 1;
+        $object->name = 'test';
+        $object->isActive = true;
+
+        $this->assertEquals(
+            '{"id":1,"name":"test","is_active":true}',
+            $this
+                ->converterHelperDouble
+                ->fromObjectToJson($object)
+        );
+    }
+
     public function fromCamelCaseToSnakeCaseProvider()
     {
         return [
