@@ -1,10 +1,10 @@
-# Base Model
+# About Base Model
 
 - [Features](#features)
 - [Installation](#installation)
 - [Examples](#examples)
 
-This is a Base Model that can be extended to define Models. It helps handling data validation, and conversion.
+This is a Base Model that can be extended to define Models. It helps handling data validation, and data conversion.
 
 ## Features
  
@@ -15,7 +15,7 @@ This is a Base Model that can be extended to define Models. It helps handling da
   * isFloat
   * isString
   * isBoolean
-* Model to array and JSON conversion, preserving hidden attributes.
+* Model to array and JSON, preserving hidden attributes.
 * Define attributes using arrays of data.
 * Can define, when validation fails, if an exception is thrown.
 * Can define if data should be validated or not.
@@ -30,7 +30,9 @@ composer require lfbn/base-model
 
 ### How to use it
 
-Define your model extending the AbstractBaseModel. Then implement a public method getValidationRules. This method should define the properties you want to validate.
+Define your model extending the AbstractBaseModel, then implement a public method getValidationRules. This method should define the properties you want to validate.
+
+Here is an example:
 
 ```php
 class User extends AbstractBaseModel
@@ -137,7 +139,7 @@ class User extends AbstractBaseModel
 
 ## How to know if is valid
 
-You only need to call the ```validate()``` method
+You need to call the ```validate()``` method
 
 ```php
 $user = new User();
@@ -163,3 +165,17 @@ $user = new User();
 $myConverter = new MyConverter();
 $user->setConverter($myConverter);
 ```
+
+## About
+
+### Requirements
+
+- Base Model works with PHP 7 or above.
+
+### Submitting bugs and feature requests
+
+Bugs and feature request are tracked on [GitHub](https://github.com/lfbn/base-model/issues)
+
+### License
+
+Base Model is licensed under the MIT License - see the `LICENSE` file for details
