@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Add the following validators: isNull, isNotNull, isEmail and isUrl.
+
+## [1.0.1] - 2018-02-16
+### Added
+- Improve the composer script for running the tests.
+- Refactor is validating property for a better naming.
+- Change the validate to give messages in case of failed validation.
+- Add PHP DOC with the format expected for the getValidationRules method.
+- Add the possibility to convert the instance to an array with no empty properties.
+- Add to README how to execute the tests.
 
 ## [1.0.0] - 2018-02-14
 ### Added

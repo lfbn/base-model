@@ -6,7 +6,7 @@ use Lfbn\BaseModel\AbstractBaseModel;
 use Lfbn\BaseModel\IConverter;
 use Lfbn\BaseModel\Helpers\ValidatorHelper;
 
-class User extends AbstractBaseModel
+class ModelUser extends AbstractBaseModel
 {
 
     /**
@@ -101,6 +101,7 @@ class User extends AbstractBaseModel
         return [
             ['property' => 'id', 'validator' => 'isNotEmpty'],
             ['property' => 'id', 'validator' => 'isInteger'],
+            ['property' => 'name', 'validator' => 'isString'],
             ['property' => 'height', 'validator' => 'isFloat'],
             ['property' => 'active', 'validator' => 'isBoolean']
         ];
@@ -118,7 +119,7 @@ class BaseModelTest extends TestCase
     public function setUp()
     {
         $this->userMock = Mockery::mock(
-            User::class
+            ModelUser::class
         )->makePartial();
     }
 
@@ -127,36 +128,68 @@ class BaseModelTest extends TestCase
         Mockery::close();
     }
 
-    public function testValidatingDefaultsToTrue()
+    public function testIsValidatingShouldDefaultsToTrue()
     {
         $this->assertTrue(
             $this->userMock->isValidating()
         );
     }
 
-    public function testValidatingSet()
+    public function testShouldAllowToDefineIfIsValidating()
     {
-        $this->userMock->setValidating(false);
+        $this->userMock->setIsValidating(false);
         $this->assertFalse($this->userMock->isValidating());
     }
 
-    public function testNotValidatingValidateReturnsFalse()
+    public function testShouldWhenNotValidatingAtValidateReturnEmptyArray()
     {
-        $this->userMock->setValidating(false);
-        $this->assertFalse($this->userMock->validate());
-    }
-
-    public function testValidatingThrowingExceptionsDefaultsToFalse()
-    {
-        $this->assertFalse(
-            $this->userMock->isValidatingThrowingExceptions()
+        $this->userMock->setIsValidating(false);
+        $this->assertEquals(
+            [],
+            $this->userMock->validate()
         );
     }
 
-    public function testValidatingThrowingExceptionsSet()
+    public function testShouldWhenValidatingReturnEmptyArrayWhenAllPropsAreValid()
     {
-        $this->userMock->setValidatingThrowingExceptions(true);
-        $this->assertTrue(
+        $validator = Mockery::Mock(ValidatorHelper::class);
+        $validator->shouldReceive([
+            'isNotEmpty' => true,
+            'isInteger' => true,
+            'isString' => true,
+            'isFloat' => true,
+            'isBoolean' => true,
+        ]);
+        $this->userMock->setValidator($validator);
+        $this->assertEquals(
+            [],
+            $this->userMock->validate()
+        );
+    }
+
+    public function testShouldWhenValidatingReturnErrorsWhenExistsInvalidProps()
+    {
+        $validator = Mockery::Mock(ValidatorHelper::class);
+        $validator->shouldReceive([
+            'isNotEmpty' => false,
+            'isInteger' => true,
+            'isString' => false,
+            'isFloat' => true,
+            'isBoolean' => true,
+        ]);
+        $this->userMock->setValidator($validator);
+        $this->assertEquals(
+            [
+                "The value () of id shouldn't be empty.",
+                "The value () of name should be string."
+            ],
+            $this->userMock->validate()
+        );
+    }
+
+    public function testShouldWhenValidatingNotToThrowExceptionsByDefault()
+    {
+        $this->assertFalse(
             $this->userMock->isValidatingThrowingExceptions()
         );
     }
@@ -164,7 +197,7 @@ class BaseModelTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testValidateThrowingExceptionsWhenFailedValidation()
+    public function testShouldAllowWhenValidatingToThrowExceptionsWhenValidatingFails()
     {
         $validator = Mockery::Mock(ValidatorHelper::class);
         $validator->shouldReceive('isInteger')->andReturn(false);
@@ -178,26 +211,26 @@ class BaseModelTest extends TestCase
         $this->userMock->validate();
     }
 
+    public function testShouldBePossibleToPopulateData()
+    {
+        $this->userMock->setData(['id' => 1]);
+        $this->assertEquals(
+            1,
+            $this->userMock->getId()
+        );
+    }
+
     /**
      * @param array $expected
      * @expectedException Error
-     * @dataProvider setDataInvalidValuesProvider
+     * @dataProvider invalidValuesProvider
      */
-    public function testSetDataValidateData($expected)
+    public function testShouldValidateDataWhenBeingPopulated($expected)
     {
         $this->expectException($this->userMock->setData($expected));
     }
 
-    public function testSetData()
-    {
-        $this->userMock->setData(['teste' => 1]);
-        $this->assertEquals(
-            $this->userMock->teste,
-            1
-        );
-    }
-
-    public function testToArray()
+    public function testShouldConvertToArray()
     {
         $converterMock = Mockery::mock(
             IConverter::class
@@ -207,12 +240,12 @@ class BaseModelTest extends TestCase
             ->andReturn(['test' => 1]);
         $this->userMock->setConverter($converterMock);
         $this->assertEquals(
-            $this->userMock->toArray(),
-            ['test' => 1]
+            ['test' => 1],
+            $this->userMock->toArray()
         );
     }
 
-    public function testToJson()
+    public function testShouldConvertToJson()
     {
         $converterMock = Mockery::mock(
             IConverter::class
@@ -230,7 +263,7 @@ class BaseModelTest extends TestCase
     /**
      * @return array
      */
-    public function setDataInvalidValuesProvider()
+    public function invalidValuesProvider()
     {
         return [
             [

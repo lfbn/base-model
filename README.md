@@ -139,7 +139,7 @@ class User extends AbstractBaseModel
 
 ## How to know if is valid
 
-You need to call the ```validate()``` method
+You need to call the `validate()` method
 
 ```php
 $user = new User();
@@ -171,6 +171,14 @@ $user->setConverter($myConverter);
 ### Requirements
 
 - Base Model works with PHP 7 or above.
+
+### Running Tests
+
+You can run the tests executing the following command. Before you can run these, be sure to run `composer install`.
+
+```bash
+composer test
+```
 
 ### Submitting bugs and feature requests
 

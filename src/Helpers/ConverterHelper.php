@@ -35,42 +35,49 @@ class ConverterHelper implements IConverter
 
     /**
      * @param $object
+     * @param boolean $excludeEmptyProps
      * @return array
      */
-    public function fromObjectToArray($object)
+    public function fromObjectToArray($object, $excludeEmptyProps = false)
     {
         if (empty($object) || !is_object($object)) {
             return [];
         }
 
-        return $this->extractPropertiesFromObject($object);
+        return $this->extractPropertiesFromObject($object, $excludeEmptyProps);
     }
 
     /**
      * @param $object
+     * @param boolean $excludeEmptyProps
      * @return string
      */
-    public function fromObjectToJson($object)
+    public function fromObjectToJson($object, $excludeEmptyProps = false)
     {
         if (empty($object) || !is_object($object)) {
             return '';
         }
 
-        return json_encode($this->extractPropertiesFromObject($object));
+        return json_encode($this->extractPropertiesFromObject($object, $excludeEmptyProps));
     }
 
     /**
      * @param $object
+     * @param boolean $excludeEmptyProps
      * @return array
      * @ref https://stackoverflow.com/a/37610076/155905
      */
-    private function extractPropertiesFromObject($object)
+    private function extractPropertiesFromObject($object, $excludeEmptyProps = false)
     {
         $result = [];
 
         $reflector = new \ReflectionObject($object);
         $properties = $reflector->getProperties();
         foreach ($properties as $property) {
+            $value = $property->getValue($object);
+            if ($excludeEmptyProps && empty($value)) {
+                continue;
+            }
             $refProperty = $reflector->getProperty($property->getName());
             $refProperty->setAccessible(true);
             $result[self::fromCamelCaseToSnakeCase($property->getName())] = $property->getValue($object);

@@ -22,7 +22,7 @@ class ValidatorHelperTest extends TestCase
      * @param $input
      * @dataProvider emptyValuesProvider
      */
-    public function testIfEmptyValueExceptNotEmptyShouldNotValidate($input)
+    public function testWhenTheValueIsEmptyShouldNotValidate($input)
     {
         $this->assertTrue(
             $this->validatorHelperMock->isNumeric($input)
@@ -49,7 +49,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider emptyValuesProvider
      */
-    public function testIsNotEmptyFails($input)
+    public function testIfIsNotEmptyFails($input)
     {
         $this->assertFalse(
             $this->validatorHelperMock->isNotEmpty($input)
@@ -58,9 +58,9 @@ class ValidatorHelperTest extends TestCase
 
     /**
      * @param mixed $input
-     * @dataProvider isNotEmptySucceedsProvider
+     * @dataProvider notEmptyValuesProvider
      */
-    public function testIsNotEmptySucceeds($input)
+    public function testIfIsNotEmptySucceeds($input)
     {
         $this->assertTrue(
             $this->validatorHelperMock->isNotEmpty($input)
@@ -68,10 +68,10 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param mixed $input
-     * @dataProvider isNumericFailsProvider
+     * @param integer $input
+     * @dataProvider notNumericProvider
      */
-    public function testIsNumericFails($input)
+    public function testIfIsNumericFails($input)
     {
         $this->assertFalse(
             $this->validatorHelperMock->isNumeric($input)
@@ -79,10 +79,10 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param mixed $input
-         * @dataProvider isNumericSucceedsProvider
+     * @param integer $input
+         * @dataProvider numericProvider
      */
-    public function testIsNumericSucceeds($input)
+    public function testIfIsNumericSucceeds($input)
     {
         $this->assertTrue(
             $this->validatorHelperMock->isNumeric($input)
@@ -91,9 +91,9 @@ class ValidatorHelperTest extends TestCase
 
     /**
      * @param mixed $input
-     * @dataProvider isIntegerFailsProvider
+     * @dataProvider notIntegerProvider
      */
-    public function testIsIntegerFails($input)
+    public function testIfIsIntegerFails($input)
     {
         $this->assertFalse(
             $this->validatorHelperMock->isInteger($input)
@@ -101,10 +101,10 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param mixed $input
-     * @dataProvider isIntegerSucceedsProvider
+     * @param integer $input
+     * @dataProvider integerProvider
      */
-    public function testIsIntegerSucceeds($input)
+    public function testIfIsIntegerSucceeds($input)
     {
         $this->assertTrue(
             $this->validatorHelperMock->isInteger($input)
@@ -113,9 +113,9 @@ class ValidatorHelperTest extends TestCase
 
     /**
      * @param mixed $input
-     * @dataProvider isFloatFailsProvider
+     * @dataProvider notFloatProvider
      */
-    public function testIsFloatFails($input)
+    public function testIfIsFloatFails($input)
     {
         $this->assertFalse(
             $this->validatorHelperMock->isFloat($input)
@@ -123,10 +123,10 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param mixed $input
-     * @dataProvider isFloatSucceedsProvider
+     * @param float $input
+     * @dataProvider floatProvider
      */
-    public function testIsFloatSucceeds($input)
+    public function testIfIsFloatSucceeds($input)
     {
         $this->assertTrue(
             $this->validatorHelperMock->isFloat($input)
@@ -135,9 +135,9 @@ class ValidatorHelperTest extends TestCase
 
     /**
      * @param mixed $input
-     * @dataProvider isStringFailsProvider
+     * @dataProvider notStringProvider
      */
-    public function testIsStringFails($input)
+    public function testIfIsStringFails($input)
     {
         $this->assertFalse(
             $this->validatorHelperMock->isString($input)
@@ -145,10 +145,10 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param mixed $input
-     * @dataProvider isStringSucceedsProvider
+     * @param string $input
+     * @dataProvider stringProvider
      */
-    public function testIsStringSucceeds($input)
+    public function testIfIsStringSucceeds($input)
     {
         $this->assertTrue(
             $this->validatorHelperMock->isString($input)
@@ -157,9 +157,9 @@ class ValidatorHelperTest extends TestCase
 
     /**
      * @param mixed $input
-     * @dataProvider isBooleanFailsProvider
+     * @dataProvider notBooleanProvider
      */
-    public function testIsBooleanFails($input)
+    public function testIfIsBooleanFails($input)
     {
         $this->assertFalse(
             $this->validatorHelperMock->isBoolean($input)
@@ -167,10 +167,10 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param mixed $input
-     * @dataProvider isBooleanSucceedsProvider
+     * @param boolean $input
+     * @dataProvider booleanProvider
      */
-    public function testIsBooleanSucceeds($input)
+    public function testIfIsBooleanSucceeds($input)
     {
         $this->assertTrue(
             $this->validatorHelperMock->isBoolean($input)
@@ -192,7 +192,7 @@ class ValidatorHelperTest extends TestCase
     /**
      * @return array
      */
-    public function isNotEmptySucceedsProvider()
+    public function notEmptyValuesProvider()
     {
         return [
             'Not empty string' => ['test'],
@@ -204,7 +204,7 @@ class ValidatorHelperTest extends TestCase
     /**
      * @return array
      */
-    public function isNumericFailsProvider()
+    public function notNumericProvider()
     {
         return [
             'Not empty string' => ['test'],
@@ -215,7 +215,7 @@ class ValidatorHelperTest extends TestCase
     /**
      * @return array
      */
-    public function isNumericSucceedsProvider()
+    public function numericProvider()
     {
         return [
             'Integer' => [1],
@@ -223,35 +223,35 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function isIntegerFailsProvider()
+    public function notIntegerProvider()
     {
         return [
             'Float' => [6.5]
         ];
     }
 
-    public function isIntegerSucceedsProvider()
+    public function integerProvider()
     {
         return [
             'Integer' => [6]
         ];
     }
 
-    public function isFloatFailsProvider()
+    public function notFloatProvider()
     {
         return [
             'Integer' => [6]
         ];
     }
 
-    public function isFloatSucceedsProvider()
+    public function floatProvider()
     {
         return [
             'Float' => [6.5]
         ];
     }
 
-    public function isStringFailsProvider()
+    public function notStringProvider()
     {
         return [
             'Integer' => [6],
@@ -259,14 +259,14 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function isStringSucceedsProvider()
+    public function stringProvider()
     {
         return [
             'String' => ['test']
         ];
     }
 
-    public function isBooleanFailsProvider()
+    public function notBooleanProvider()
     {
         return [
             'Integer' => [6],
@@ -274,7 +274,7 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function isBooleanSucceedsProvider()
+    public function booleanProvider()
     {
         return [
             'String true' => ['true'],

@@ -13,7 +13,7 @@ abstract class AbstractBaseModel
     /**
      * @var bool
      */
-    private $validating = true;
+    private $isValidating = true;
 
     /**
      * @var bool
@@ -33,7 +33,19 @@ abstract class AbstractBaseModel
     /**
      * @var array
      */
-    private $errorMessages;
+    private $errors = [];
+
+    /**
+     * @var array
+     */
+    private static $errorMessages = [
+        'isBoolean' => 'The value (%s) of %s should be boolean.',
+        'isString' => 'The value (%s) of %s should be string.',
+        'isFloat' => 'The value (%s) of %s should be float.',
+        'isInteger' => 'The value (%s) of %s should be integer.',
+        'isNumeric' => 'The value (%s) of %s should be numeric.',
+        'isNotEmpty' => 'The value (%s) of %s shouldn\'t be empty.'
+    ];
 
     /**
      * @param IConverter $converter
@@ -58,32 +70,41 @@ abstract class AbstractBaseModel
     }
 
     /**
-     * @return array
+     * Defines the properties and rules to be validated.
+     *
+     * @return array Should be in the following format: [['property' => 'id', 'validator' => 'isInteger' ]]
      */
     abstract public function getValidationRules();
 
     /**
-     * @return bool
+     * @return array
      */
     public function validate()
     {
-        if (!$this->validating) {
-            return false;
+        if (!$this->isValidating) {
+            return [];
         }
 
         foreach ($this->getValidationRules() as $rule) {
             if (!$this->validator->{$rule['validator']}($this->{$rule['property']})) {
-                $message = "The {$rule['validator']} for the property {$rule['property']} failed";
+                if (isset(self::$errorMessages[$rule['validator']])) {
+                    $message = sprintf(
+                        self::$errorMessages[$rule['validator']],
+                        $this->{$rule['property']},
+                        $rule['property']
+                    );
+                } else {
+                    $message = "The {$rule['validator']} for the property {$rule['property']} failed";
+                }
                 if ($this->validatingThrowingExceptions) {
                     throw new \InvalidArgumentException(
-                        "BaseModel: " . $message
+                        "Base Model: " . $message
                     );
                 }
-                $this->errorMessages[] = $message;
-                return false;
+                $this->errors[] = $message;
             }
         }
-        return true;
+        return $this->errors;
     }
 
     /**
@@ -91,15 +112,15 @@ abstract class AbstractBaseModel
      */
     public function isValidating(): bool
     {
-        return $this->validating;
+        return $this->isValidating;
     }
 
     /**
      * @param bool $value
      */
-    public function setValidating(bool $value)
+    public function setIsValidating(bool $value)
     {
-        $this->validating = $value;
+        $this->isValidating = $value;
     }
 
     /**
@@ -148,17 +169,17 @@ abstract class AbstractBaseModel
     /**
      * @return array
      */
-    public function getErrorMessages()
+    public function toArray()
     {
-        return $this->errorMessages;
+        return $this->converter->fromObjectToArray($this);
     }
 
     /**
      * @return array
      */
-    public function toArray()
+    public function toArrayWithNoEmptyProperties()
     {
-        return $this->converter->fromObjectToArray($this);
+        return $this->converter->fromObjectToArray($this, true);
     }
 
     /**

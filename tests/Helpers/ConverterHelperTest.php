@@ -21,9 +21,9 @@ class ConverterHelperTest extends TestCase
     /**
      * @param string $input
      * @param string $expectedOutput
-     * @dataProvider fromCamelCaseToSnakeCaseProvider
+     * @dataProvider shouldConvertFromCamelCaseToSnakeCaseProvider
      */
-    public function testFromCamelCaseToSnakeCase($input, $expectedOutput)
+    public function testShouldConvertFromCamelCaseToSnakeCase($input, $expectedOutput)
     {
         $this->assertEquals(
             $this
@@ -33,7 +33,7 @@ class ConverterHelperTest extends TestCase
         );
     }
 
-    public function testFromObjectToArray()
+    public function testShouldConvertFromObjectToArray()
     {
         $object = new \stdClass();
         $object->id = 1;
@@ -47,7 +47,21 @@ class ConverterHelperTest extends TestCase
         );
     }
 
-    public function testFromObjectToJson()
+    public function testShouldConvertFromObjectToArrayWithOnlyNotEmptyProps()
+    {
+        $object = new \stdClass();
+        $object->id = 1;
+        $object->name = '';
+        $object->isActive = true;
+        $this->assertEquals(
+            $this
+                ->converterHelperDouble
+                ->fromObjectToArray($object, true),
+            ['id' => 1, 'is_active' => true]
+        );
+    }
+
+    public function testShouldConvertFromObjectToJson()
     {
         $object = new \stdClass();
         $object->id = 1;
@@ -62,7 +76,22 @@ class ConverterHelperTest extends TestCase
         );
     }
 
-    public function fromCamelCaseToSnakeCaseProvider()
+    public function testShouldConvertFromObjectToJsonWithOnlyNotEmptyProps()
+    {
+        $object = new \stdClass();
+        $object->id = '';
+        $object->name = 'test';
+        $object->isActive = true;
+
+        $this->assertEquals(
+            '{"name":"test","is_active":true}',
+            $this
+                ->converterHelperDouble
+                ->fromObjectToJson($object, true)
+        );
+    }
+
+    public function shouldConvertFromCamelCaseToSnakeCaseProvider()
     {
         return [
             ['camelCase', 'camel_case'],
