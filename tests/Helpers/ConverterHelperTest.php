@@ -1,7 +1,8 @@
 <?php
 
+namespace Lfbn\BaseModel\Helpers;
+
 use PHPUnit\Framework\TestCase;
-use Lfbn\BaseModel\Helpers\ConverterHelper;
 
 class ConverterHelperTest extends TestCase
 {
@@ -13,7 +14,7 @@ class ConverterHelperTest extends TestCase
 
     public function setUp()
     {
-        $this->converterHelperDouble = Mockery::mock(
+        $this->converterHelperDouble = \Mockery::mock(
             ConverterHelper::class
         )->makePartial();
     }

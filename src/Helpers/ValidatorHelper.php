@@ -8,7 +8,8 @@ class ValidatorHelper implements IValidator
 {
 
     public function __construct()
-    {}
+    {
+    }
 
     /**
      * @param $value
@@ -125,4 +126,16 @@ class ValidatorHelper implements IValidator
         return true;
     }
 
+    /**
+     * @param null $value
+     * @return boolean
+     */
+    public function isNull($value)
+    {
+        if ($value === null) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -1,9 +1,9 @@
 <?php
 
+namespace Lfbn\BaseModel;
+
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
-use Lfbn\BaseModel\AbstractBaseModel;
-use Lfbn\BaseModel\IConverter;
 use Lfbn\BaseModel\Helpers\ValidatorHelper;
 
 class ModelUser extends AbstractBaseModel
@@ -108,24 +108,25 @@ class ModelUser extends AbstractBaseModel
     }
 }
 
+// @codingStandardsIgnoreStart
 class BaseModelTest extends TestCase
 {
-
+    // @codingStandardsIgnoreEnd
     /**
-     * @var User
+     * @var ModelUser
      */
     protected $userMock;
 
     public function setUp()
     {
-        $this->userMock = Mockery::mock(
+        $this->userMock = \Mockery::mock(
             ModelUser::class
         )->makePartial();
     }
 
     public function tearDown()
     {
-        Mockery::close();
+        \Mockery::close();
     }
 
     public function testIsValidatingShouldDefaultsToTrue()
@@ -152,7 +153,7 @@ class BaseModelTest extends TestCase
 
     public function testShouldWhenValidatingReturnEmptyArrayWhenAllPropsAreValid()
     {
-        $validator = Mockery::Mock(ValidatorHelper::class);
+        $validator = \Mockery::Mock(ValidatorHelper::class);
         $validator->shouldReceive([
             'isNotEmpty' => true,
             'isInteger' => true,
@@ -169,7 +170,7 @@ class BaseModelTest extends TestCase
 
     public function testShouldWhenValidatingReturnErrorsWhenExistsInvalidProps()
     {
-        $validator = Mockery::Mock(ValidatorHelper::class);
+        $validator = \Mockery::Mock(ValidatorHelper::class);
         $validator->shouldReceive([
             'isNotEmpty' => false,
             'isInteger' => true,
@@ -199,7 +200,7 @@ class BaseModelTest extends TestCase
      */
     public function testShouldAllowWhenValidatingToThrowExceptionsWhenValidatingFails()
     {
-        $validator = Mockery::Mock(ValidatorHelper::class);
+        $validator = \Mockery::Mock(ValidatorHelper::class);
         $validator->shouldReceive('isInteger')->andReturn(false);
         $this->userMock->setValidator($validator);
 
@@ -232,7 +233,7 @@ class BaseModelTest extends TestCase
 
     public function testShouldConvertToArray()
     {
-        $converterMock = Mockery::mock(
+        $converterMock = \Mockery::mock(
             IConverter::class
         );
         $converterMock
@@ -247,7 +248,7 @@ class BaseModelTest extends TestCase
 
     public function testShouldConvertToJson()
     {
-        $converterMock = Mockery::mock(
+        $converterMock = \Mockery::mock(
             IConverter::class
         );
         $converterMock

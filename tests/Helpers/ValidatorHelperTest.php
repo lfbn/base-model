@@ -1,7 +1,8 @@
 <?php
 
+namespace Lfbn\BaseModel\Helpers;
+
 use PHPUnit\Framework\TestCase;
-use Lfbn\BaseModel\Helpers\ValidatorHelper;
 
 class ValidatorHelperTest extends TestCase
 {
@@ -13,7 +14,7 @@ class ValidatorHelperTest extends TestCase
 
     public function setUp()
     {
-        $this->validatorHelperMock = Mockery::mock(
+        $this->validatorHelperMock = \Mockery::mock(
             ValidatorHelper::class
         )->makePartial();
     }
@@ -178,6 +179,28 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
+     * @param mixed $input
+     * @dataProvider notNullProvider
+     */
+    public function testIfIsNullFails($input)
+    {
+        $this->assertFalse(
+            $this->validatorHelperMock->isNull($input)
+        );
+    }
+
+    /**
+     * @param null $input
+     * @dataProvider nullProvider
+     */
+    public function testIfIsNullSucceeds($input)
+    {
+        $this->assertTrue(
+            $this->validatorHelperMock->isNull($input)
+        );
+    }
+
+    /**
      * @return array
      */
     public function emptyValuesProvider()
@@ -208,7 +231,7 @@ class ValidatorHelperTest extends TestCase
     {
         return [
             'Not empty string' => ['test'],
-            'Object' => [new stdClass()],
+            'Object' => [new \stdClass()],
         ];
     }
 
@@ -255,7 +278,7 @@ class ValidatorHelperTest extends TestCase
     {
         return [
             'Integer' => [6],
-            'Object' => [new stdClass()]
+            'Object' => [new \stdClass()]
         ];
     }
 
@@ -285,6 +308,22 @@ class ValidatorHelperTest extends TestCase
             'String false' => ['false'],
             'True' => [true],
             'False' => [false]
+        ];
+    }
+
+    public function nullProvider()
+    {
+        return [
+            'Null' => [null]
+        ];
+    }
+
+    public function notNullProvider()
+    {
+        return [
+            'Array' => [array()],
+            'String' => [''],
+            'Integer' => [123]
         ];
     }
 }

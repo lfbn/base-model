@@ -7,8 +7,9 @@ use Lfbn\BaseModel\IConverter;
 class ConverterHelper implements IConverter
 {
 
-    public function _construct()
-    {}
+    public function __construct()
+    {
+    }
 
     /**
      * @param string $value
