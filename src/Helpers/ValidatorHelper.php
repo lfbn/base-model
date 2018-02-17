@@ -138,4 +138,17 @@ class ValidatorHelper implements IValidator
 
         return false;
     }
+
+    /**
+     * @param null $value
+     * @return boolean
+     */
+    public function isNotNull($value)
+    {
+        if ($value !== null) {
+            return true;
+        }
+
+        return false;
+    }
 }

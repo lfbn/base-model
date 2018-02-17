@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Add the following validators: isNull, isNotNull, isEmail and isUrl.
+- Add the following validators: isArray, isEmail and isUrl.
+
+## [1.0.2] - 2018-02-17
+### Added
+- Add the following validators: isNull and isNotNull.
+- Improve documentation of the project. Add linter and phpcs to scripts.
 
 ## [1.0.1] - 2018-02-16
 ### Added

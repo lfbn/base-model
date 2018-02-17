@@ -201,6 +201,28 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
+     * @param mixed $input
+     * @dataProvider nullProvider
+     */
+    public function testIfIsNotNullFails($input)
+    {
+        $this->assertFalse(
+            $this->validatorHelperMock->isNotNull($input)
+        );
+    }
+
+    /**
+     * @param null $input
+     * @dataProvider notNullProvider
+     */
+    public function testIfIsNotNullSucceeds($input)
+    {
+        $this->assertTrue(
+            $this->validatorHelperMock->isNotNull($input)
+        );
+    }
+
+    /**
      * @return array
      */
     public function emptyValuesProvider()

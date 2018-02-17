@@ -16,4 +16,8 @@ interface IValidator
     public function isString($value);
 
     public function isBoolean($value);
+
+    public function isNull($value);
+
+    public function isNotNull($value);
 }

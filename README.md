@@ -15,6 +15,8 @@ This is a Base Model that can be extended to define Models. It helps handling da
   * isFloat
   * isString
   * isBoolean
+  * isNull
+  * isNotNull
 * Model to array and JSON, preserving hidden attributes.
 * Define attributes using arrays of data.
 * Can define, when validation fails, if an exception is thrown.
