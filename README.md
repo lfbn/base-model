@@ -137,7 +137,7 @@ class User extends AbstractBaseModel
 }
 ```
 
-## How to know if is valid
+## How to know if is valid?
 
 You need to call the `validate()` method
 
