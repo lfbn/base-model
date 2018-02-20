@@ -1,6 +1,6 @@
 {
   "name": "lfbn/base-model",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "This is a Base Model that can be extended to define Models. It helps handling data validation, and data conversion.",
   "keywords": ["validation", "model"],
   "homepage": "https://github.com/lfbn/base-model",

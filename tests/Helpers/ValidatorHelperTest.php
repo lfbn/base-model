@@ -180,6 +180,50 @@ class ValidatorHelperTest extends TestCase
 
     /**
      * @param mixed $input
+     * @dataProvider notTrueProvider
+     */
+    public function testIfIsTrueFails($input)
+    {
+        $this->assertFalse(
+            $this->validatorHelperMock->isTrue($input)
+        );
+    }
+
+    /**
+     * @param boolean $input
+     * @dataProvider trueProvider
+     */
+    public function testIfIsTrueSucceeds($input)
+    {
+        $this->assertTrue(
+            $this->validatorHelperMock->isBoolean($input)
+        );
+    }
+
+    /**
+     * @param mixed $input
+     * @dataProvider notFalseProvider
+     */
+    public function testIfIsFalseFails($input)
+    {
+        $this->assertFalse(
+            $this->validatorHelperMock->isFalse($input)
+        );
+    }
+
+    /**
+     * @param boolean $input
+     * @dataProvider falseProvider
+     */
+    public function testIfIsFalseSucceeds($input)
+    {
+        $this->assertTrue(
+            $this->validatorHelperMock->isFalse($input)
+        );
+    }
+
+    /**
+     * @param mixed $input
      * @dataProvider notNullProvider
      */
     public function testIfIsNullFails($input)
@@ -223,6 +267,28 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
+     * @param mixed $input
+     * @dataProvider notArrayProvider
+     */
+    public function testIfIsArrayFails($input)
+    {
+        $this->assertFalse(
+            $this->validatorHelperMock->isArray($input)
+        );
+    }
+
+    /**
+     * @param null $input
+     * @dataProvider arrayProvider
+     */
+    public function testIfIsArraySucceeds($input)
+    {
+        $this->assertTrue(
+            $this->validatorHelperMock->isArray($input)
+        );
+    }
+
+    /**
      * @return array
      */
     public function emptyValuesProvider()
@@ -249,17 +315,6 @@ class ValidatorHelperTest extends TestCase
     /**
      * @return array
      */
-    public function notNumericProvider()
-    {
-        return [
-            'Not empty string' => ['test'],
-            'Object' => [new \stdClass()],
-        ];
-    }
-
-    /**
-     * @return array
-     */
     public function numericProvider()
     {
         return [
@@ -268,10 +323,14 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function notIntegerProvider()
+    /**
+     * @return array
+     */
+    public function notNumericProvider()
     {
         return [
-            'Float' => [6.5]
+            'Not empty string' => ['test'],
+            'Object' => [new \stdClass()],
         ];
     }
 
@@ -282,10 +341,10 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function notFloatProvider()
+    public function notIntegerProvider()
     {
         return [
-            'Integer' => [6]
+            'Float' => [6.5]
         ];
     }
 
@@ -296,11 +355,10 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function notStringProvider()
+    public function notFloatProvider()
     {
         return [
-            'Integer' => [6],
-            'Object' => [new \stdClass()]
+            'Integer' => [6]
         ];
     }
 
@@ -311,11 +369,11 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function notBooleanProvider()
+    public function notStringProvider()
     {
         return [
             'Integer' => [6],
-            'String' => ['test']
+            'Object' => [new \stdClass()]
         ];
     }
 
@@ -333,6 +391,53 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
+    public function notBooleanProvider()
+    {
+        return [
+            'Integer' => [6],
+            'String' => ['test']
+        ];
+    }
+
+    public function trueProvider()
+    {
+        return [
+            'String number one' => ['1'],
+            'Number one' => [1],
+            'True' => [true]
+        ];
+    }
+
+    public function notTrueProvider()
+    {
+        return [
+            'String false' => ['false'],
+            'String number one' => ['0'],
+            'Number zero' => [0],
+            'False' => [false],
+            'Null' => [null]
+        ];
+    }
+
+    public function falseProvider()
+    {
+        return [
+            'String number zero' => ['0'],
+            'Number zero' => [0],
+            'False' => [false],
+            'Null' => [null]
+        ];
+    }
+
+    public function notFalseProvider()
+    {
+        return [
+            'String number one' => ['1'],
+            'Number one' => [1],
+            'True' => [true]
+        ];
+    }
+
     public function nullProvider()
     {
         return [
@@ -346,6 +451,24 @@ class ValidatorHelperTest extends TestCase
             'Array' => [array()],
             'String' => [''],
             'Integer' => [123]
+        ];
+    }
+
+    public function arrayProvider()
+    {
+        return [
+            'Array' => [array()],
+            'Array brackets' => [[]],
+            'Associative array' => [array('teste' => 1)]
+        ];
+    }
+
+    public function notArrayProvider()
+    {
+        return [
+            'String' => [''],
+            'Number' => [1],
+            'Boolean' => [true]
         ];
     }
 }

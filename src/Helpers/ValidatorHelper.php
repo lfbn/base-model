@@ -127,6 +127,39 @@ class ValidatorHelper implements IValidator
     }
 
     /**
+     * @param boolean $value
+     * @return bool
+     */
+    public function isTrue($value)
+    {
+        if (true === $value ||
+            1 === $value ||
+            '1' === $value
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param boolean $value
+     * @return bool
+     */
+    public function isFalse($value)
+    {
+        if (null === $value ||
+            false === $value ||
+            0 === $value ||
+            '0' === $value
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param null $value
      * @return boolean
      */
@@ -146,6 +179,19 @@ class ValidatorHelper implements IValidator
     public function isNotNull($value)
     {
         if ($value !== null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $value
+     * @return boolean
+     */
+    public function isArray($value)
+    {
+        if (is_array($value)) {
             return true;
         }
 
