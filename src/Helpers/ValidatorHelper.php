@@ -197,4 +197,17 @@ class ValidatorHelper implements IValidator
 
         return false;
     }
+
+    /**
+     * @param string $value
+     * @return boolean
+     */
+    public function isEmail($value)
+    {
+        if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            return true;
+        }
+
+        return false;
+    }
 }

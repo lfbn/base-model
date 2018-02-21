@@ -81,7 +81,7 @@ class ValidatorHelperTest extends TestCase
 
     /**
      * @param integer $input
-         * @dataProvider numericProvider
+     * @dataProvider numericProvider
      */
     public function testIfIsNumericSucceeds($input)
     {
@@ -256,7 +256,7 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param null $input
+     * @param mixed $input
      * @dataProvider notNullProvider
      */
     public function testIfIsNotNullSucceeds($input)
@@ -278,7 +278,7 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param null $input
+     * @param array $input
      * @dataProvider arrayProvider
      */
     public function testIfIsArraySucceeds($input)
@@ -287,6 +287,32 @@ class ValidatorHelperTest extends TestCase
             $this->validatorHelperMock->isArray($input)
         );
     }
+
+    /**
+     * @param string $input
+     * @dataProvider notEmailProvider
+     */
+    public function testIfIsEmailFails($input)
+    {
+        $this->assertFalse(
+            $this->validatorHelperMock->isEmail($input)
+        );
+    }
+
+    /**
+     * @param string $input
+     * @dataProvider emailProvider
+     */
+    public function testIfIsEmailSucceeds($input)
+    {
+        $this->assertTrue(
+            $this->validatorHelperMock->isEmail($input)
+        );
+    }
+
+    /**
+     * PROVIDERS
+     */
 
     /**
      * @return array
@@ -469,6 +495,25 @@ class ValidatorHelperTest extends TestCase
             'String' => [''],
             'Number' => [1],
             'Boolean' => [true]
+        ];
+    }
+
+    public function emailProvider()
+    {
+        return [
+            'Valid e-mail' => ['test@test.com'],
+            'Valid e-mail with several dots' => ['test.test.test@test.com'],
+            'Valid e-mail with plus sign' => ['test+test@test.com'],
+            'Valid e-mail with underscore' => ['test_test@test.com']
+        ];
+    }
+
+    public function notEmailProvider()
+    {
+        return [
+            'Invalid e-mail without domain' => ['test'],
+            'Invalid e-mail with only domain' => ['@test.com'],
+            'Invalid e-mail with two at' => ['test@test@.com']
         ];
     }
 }
