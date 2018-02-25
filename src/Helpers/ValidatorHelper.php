@@ -12,10 +12,10 @@ class ValidatorHelper implements IValidator
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return bool
      */
-    public function isNotEmpty($value)
+    public function isNotEmpty($value): bool
     {
         if (empty($value)) {
             return false;
@@ -26,100 +26,84 @@ class ValidatorHelper implements IValidator
 
     /**
      * @param int $value
-     * @return boolean
+     * @return bool
      */
-    public function isNumeric($value)
+    public function isNumeric($value): bool
     {
         if (empty($value)) {
             return true;
         }
 
-        if (!is_numeric($value)) {
-            return false;
-        }
-
-        return true;
+        return \is_numeric($value);
     }
 
     /**
      * @param int $value
-     * @return boolean
+     * @return bool
      */
-    public function isInteger($value)
+    public function isInteger($value): bool
     {
         if (empty($value)) {
             return true;
         }
 
-        if (!is_integer($value)) {
-            return false;
-        }
-
-        return true;
+        return \is_int($value);
     }
 
     /**
      * @param float $value
-     * @return boolean
+     * @return bool
      */
-    public function isFloat($value)
+    public function isFloat($value): bool
     {
         if (empty($value)) {
             return true;
         }
 
-        if (!is_float($value)) {
-            return false;
-        }
-
-        return true;
+        return \is_float($value);
     }
 
     /**
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public function isString($value)
+    public function isString($value): bool
     {
         if (empty($value)) {
             return true;
         }
 
-        if (!is_string($value)) {
-            return false;
-        }
-
-        return true;
+        return \is_string($value);
     }
 
     /**
      * @param boolean $value
-     * @return boolean
+     * @return bool
      */
-    public function isBoolean($value)
+    public function isBoolean($value): bool
     {
-
         if (empty($value)) {
             return true;
         }
 
-        if (in_array(
-            $value,
-            [0, 1],
-            true
-        )) {
+        if (\in_array($value, [0, 1], true)) {
             return true;
         }
 
-        if (in_array(
-            $value,
-            ["0", "1", "true", "false"],
-            true
-        )) {
+        if (\in_array($value, ['0', '1', 'true', 'false'], true)) {
             return true;
         }
 
-        if (!is_bool($value)) {
+        return \is_bool($value);
+    }
+
+    /**
+     * @param boolean $value
+     * @return bool
+     */
+    public function isTrue($value): bool
+    {
+        if (false === $value || 0 === $value || '0' === $value) {
             return false;
         }
 
@@ -130,29 +114,9 @@ class ValidatorHelper implements IValidator
      * @param boolean $value
      * @return bool
      */
-    public function isTrue($value)
+    public function isFalse($value): bool
     {
-        if (true === $value ||
-            1 === $value ||
-            '1' === $value
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param boolean $value
-     * @return bool
-     */
-    public function isFalse($value)
-    {
-        if (null === $value ||
-            false === $value ||
-            0 === $value ||
-            '0' === $value
-        ) {
+        if (false === $value || 0 === $value || '0' === $value) {
             return true;
         }
 
@@ -161,9 +125,9 @@ class ValidatorHelper implements IValidator
 
     /**
      * @param null $value
-     * @return boolean
+     * @return bool
      */
-    public function isNull($value)
+    public function isNull($value): bool
     {
         if ($value === null) {
             return true;
@@ -174,9 +138,9 @@ class ValidatorHelper implements IValidator
 
     /**
      * @param null $value
-     * @return boolean
+     * @return bool
      */
-    public function isNotNull($value)
+    public function isNotNull($value): bool
     {
         if ($value !== null) {
             return true;
@@ -187,11 +151,11 @@ class ValidatorHelper implements IValidator
 
     /**
      * @param array $value
-     * @return boolean
+     * @return bool
      */
-    public function isArray($value)
+    public function isArray($value): bool
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return true;
         }
 
@@ -200,11 +164,24 @@ class ValidatorHelper implements IValidator
 
     /**
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    public function isEmail($value)
+    public function isEmail(string $value): bool
     {
-        if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        if (\filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $value
+     * @return bool
+     */
+    public function isUrl(string $value): bool
+    {
+        if (\filter_var($value, FILTER_VALIDATE_URL)) {
             return true;
         }
 

@@ -17,7 +17,17 @@ interface IValidator
 
     public function isBoolean($value);
 
+    public function isTrue($value);
+
+    public function isFalse($value);
+
     public function isNull($value);
 
     public function isNotNull($value);
+
+    public function isArray($value);
+
+    public function isEmail(string $value);
+
+    public function isUrl(string $value);
 }

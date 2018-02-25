@@ -1,7 +1,7 @@
 {
   "name": "lfbn/base-model",
-  "version": "1.0.4",
-  "description": "This is a Base Model that can be extended to define Models. It helps handling data validation, and data conversion.",
+  "version": "1.0.5",
+  "description": "This is a Base Model that can be extended to define Models. It helps handling data validation, and extracting data.",
   "keywords": ["validation", "model"],
   "homepage": "https://github.com/lfbn/base-model",
   "license": "MIT",
@@ -21,16 +21,19 @@
     "squizlabs/php_codesniffer": "^3.2",
     "phpunit/php-code-coverage": "^6.0",
     "jakub-onderka/php-parallel-lint": "^0.9.2",
-    "jakub-onderka/php-console-highlighter": "^0.3.2"
+    "jakub-onderka/php-console-highlighter": "^0.3.2",
+    "jakub-onderka/php-var-dump-check": "^0.2.0"
   },
   "scripts": {
     "lint": "parallel-lint src tests",
-    "phpunit": "phpunit --verbose  --colors=always --testdox",
+    "var-dump-check": "var-dump-check src tests",
     "phpcs": "phpcs src tests --standard=psr2 -sp --colors",
+    "phpunit": "phpunit --verbose  --colors=always --testdox",
     "tests": [
       "@lint",
-      "@phpunit",
-      "@phpcs"
+      "@var-dump-check",
+      "@phpcs",
+      "@phpunit"
     ]
   },
   "config": {
@@ -39,6 +42,11 @@
   "autoload": {
     "psr-4": {
       "Lfbn\\BaseModel\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lfbn\\BaseModel\\Tests\\": "tests/"
     }
   }
 }

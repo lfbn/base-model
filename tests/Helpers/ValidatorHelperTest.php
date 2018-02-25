@@ -1,8 +1,9 @@
 <?php
 
-namespace Lfbn\BaseModel\Helpers;
+namespace Lfbn\BaseModel\Tests\Helpers;
 
 use PHPUnit\Framework\TestCase;
+use Lfbn\BaseModel\Helpers\ValidatorHelper;
 
 class ValidatorHelperTest extends TestCase
 {
@@ -20,10 +21,10 @@ class ValidatorHelperTest extends TestCase
     }
 
     /**
-     * @param $input
+     * @param mixed $input
      * @dataProvider emptyValuesProvider
      */
-    public function testWhenTheValueIsEmptyShouldNotValidate($input)
+    public function testWhenTheValueIsEmptyShouldNotValidate($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isNumeric($input)
@@ -50,7 +51,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider emptyValuesProvider
      */
-    public function testIfIsNotEmptyFails($input)
+    public function testIfIsNotEmptyFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isNotEmpty($input)
@@ -61,7 +62,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notEmptyValuesProvider
      */
-    public function testIfIsNotEmptySucceeds($input)
+    public function testIfIsNotEmptySucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isNotEmpty($input)
@@ -72,7 +73,7 @@ class ValidatorHelperTest extends TestCase
      * @param integer $input
      * @dataProvider notNumericProvider
      */
-    public function testIfIsNumericFails($input)
+    public function testIfIsNumericFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isNumeric($input)
@@ -83,7 +84,7 @@ class ValidatorHelperTest extends TestCase
      * @param integer $input
      * @dataProvider numericProvider
      */
-    public function testIfIsNumericSucceeds($input)
+    public function testIfIsNumericSucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isNumeric($input)
@@ -94,7 +95,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notIntegerProvider
      */
-    public function testIfIsIntegerFails($input)
+    public function testIfIsIntegerFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isInteger($input)
@@ -105,7 +106,7 @@ class ValidatorHelperTest extends TestCase
      * @param integer $input
      * @dataProvider integerProvider
      */
-    public function testIfIsIntegerSucceeds($input)
+    public function testIfIsIntegerSucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isInteger($input)
@@ -116,7 +117,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notFloatProvider
      */
-    public function testIfIsFloatFails($input)
+    public function testIfIsFloatFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isFloat($input)
@@ -127,7 +128,7 @@ class ValidatorHelperTest extends TestCase
      * @param float $input
      * @dataProvider floatProvider
      */
-    public function testIfIsFloatSucceeds($input)
+    public function testIfIsFloatSucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isFloat($input)
@@ -138,7 +139,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notStringProvider
      */
-    public function testIfIsStringFails($input)
+    public function testIfIsStringFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isString($input)
@@ -149,7 +150,7 @@ class ValidatorHelperTest extends TestCase
      * @param string $input
      * @dataProvider stringProvider
      */
-    public function testIfIsStringSucceeds($input)
+    public function testIfIsStringSucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isString($input)
@@ -160,7 +161,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notBooleanProvider
      */
-    public function testIfIsBooleanFails($input)
+    public function testIfIsBooleanFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isBoolean($input)
@@ -171,7 +172,7 @@ class ValidatorHelperTest extends TestCase
      * @param boolean $input
      * @dataProvider booleanProvider
      */
-    public function testIfIsBooleanSucceeds($input)
+    public function testIfIsBooleanSucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isBoolean($input)
@@ -182,7 +183,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notTrueProvider
      */
-    public function testIfIsTrueFails($input)
+    public function testIfIsTrueFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isTrue($input)
@@ -193,10 +194,10 @@ class ValidatorHelperTest extends TestCase
      * @param boolean $input
      * @dataProvider trueProvider
      */
-    public function testIfIsTrueSucceeds($input)
+    public function testIfIsTrueSucceeds($input): void
     {
         $this->assertTrue(
-            $this->validatorHelperMock->isBoolean($input)
+            $this->validatorHelperMock->isTrue($input)
         );
     }
 
@@ -204,7 +205,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notFalseProvider
      */
-    public function testIfIsFalseFails($input)
+    public function testIfIsFalseFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isFalse($input)
@@ -215,7 +216,7 @@ class ValidatorHelperTest extends TestCase
      * @param boolean $input
      * @dataProvider falseProvider
      */
-    public function testIfIsFalseSucceeds($input)
+    public function testIfIsFalseSucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isFalse($input)
@@ -226,7 +227,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notNullProvider
      */
-    public function testIfIsNullFails($input)
+    public function testIfIsNullFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isNull($input)
@@ -237,7 +238,7 @@ class ValidatorHelperTest extends TestCase
      * @param null $input
      * @dataProvider nullProvider
      */
-    public function testIfIsNullSucceeds($input)
+    public function testIfIsNullSucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isNull($input)
@@ -248,7 +249,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider nullProvider
      */
-    public function testIfIsNotNullFails($input)
+    public function testIfIsNotNullFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isNotNull($input)
@@ -259,7 +260,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notNullProvider
      */
-    public function testIfIsNotNullSucceeds($input)
+    public function testIfIsNotNullSucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isNotNull($input)
@@ -270,7 +271,7 @@ class ValidatorHelperTest extends TestCase
      * @param mixed $input
      * @dataProvider notArrayProvider
      */
-    public function testIfIsArrayFails($input)
+    public function testIfIsArrayFails($input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isArray($input)
@@ -281,7 +282,7 @@ class ValidatorHelperTest extends TestCase
      * @param array $input
      * @dataProvider arrayProvider
      */
-    public function testIfIsArraySucceeds($input)
+    public function testIfIsArraySucceeds($input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isArray($input)
@@ -292,7 +293,7 @@ class ValidatorHelperTest extends TestCase
      * @param string $input
      * @dataProvider notEmailProvider
      */
-    public function testIfIsEmailFails($input)
+    public function testIfIsEmailFails(string $input): void
     {
         $this->assertFalse(
             $this->validatorHelperMock->isEmail($input)
@@ -303,10 +304,32 @@ class ValidatorHelperTest extends TestCase
      * @param string $input
      * @dataProvider emailProvider
      */
-    public function testIfIsEmailSucceeds($input)
+    public function testIfIsEmailSucceeds(string $input): void
     {
         $this->assertTrue(
             $this->validatorHelperMock->isEmail($input)
+        );
+    }
+
+    /**
+     * @param string $input
+     * @dataProvider notUrlProvider
+     */
+    public function testIfIsUrlFails(string $input): void
+    {
+        $this->assertFalse(
+            $this->validatorHelperMock->isUrl($input)
+        );
+    }
+
+    /**
+     * @param string $input
+     * @dataProvider urlProvider
+     */
+    public function testIfIsUrlSucceeds(string $input): void
+    {
+        $this->assertTrue(
+            $this->validatorHelperMock->isUrl($input)
         );
     }
 
@@ -317,7 +340,7 @@ class ValidatorHelperTest extends TestCase
     /**
      * @return array
      */
-    public function emptyValuesProvider()
+    public function emptyValuesProvider(): array
     {
         return [
             'Empty string' => [''],
@@ -329,7 +352,7 @@ class ValidatorHelperTest extends TestCase
     /**
      * @return array
      */
-    public function notEmptyValuesProvider()
+    public function notEmptyValuesProvider(): array
     {
         return [
             'Not empty string' => ['test'],
@@ -341,7 +364,7 @@ class ValidatorHelperTest extends TestCase
     /**
      * @return array
      */
-    public function numericProvider()
+    public function numericProvider(): array
     {
         return [
             'Integer' => [1],
@@ -352,7 +375,7 @@ class ValidatorHelperTest extends TestCase
     /**
      * @return array
      */
-    public function notNumericProvider()
+    public function notNumericProvider(): array
     {
         return [
             'Not empty string' => ['test'],
@@ -360,42 +383,42 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function integerProvider()
+    public function integerProvider(): array
     {
         return [
             'Integer' => [6]
         ];
     }
 
-    public function notIntegerProvider()
+    public function notIntegerProvider(): array
     {
         return [
             'Float' => [6.5]
         ];
     }
 
-    public function floatProvider()
+    public function floatProvider(): array
     {
         return [
             'Float' => [6.5]
         ];
     }
 
-    public function notFloatProvider()
+    public function notFloatProvider(): array
     {
         return [
             'Integer' => [6]
         ];
     }
 
-    public function stringProvider()
+    public function stringProvider(): array
     {
         return [
             'String' => ['test']
         ];
     }
 
-    public function notStringProvider()
+    public function notStringProvider(): array
     {
         return [
             'Integer' => [6],
@@ -403,7 +426,7 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function booleanProvider()
+    public function booleanProvider(): array
     {
         return [
             'String true' => ['true'],
@@ -417,7 +440,7 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function notBooleanProvider()
+    public function notBooleanProvider(): array
     {
         return [
             'Integer' => [6],
@@ -425,7 +448,7 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function trueProvider()
+    public function trueProvider(): array
     {
         return [
             'String number one' => ['1'],
@@ -434,28 +457,25 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function notTrueProvider()
-    {
-        return [
-            'String false' => ['false'],
-            'String number one' => ['0'],
-            'Number zero' => [0],
-            'False' => [false],
-            'Null' => [null]
-        ];
-    }
-
-    public function falseProvider()
+    public function notTrueProvider(): array
     {
         return [
             'String number zero' => ['0'],
             'Number zero' => [0],
-            'False' => [false],
-            'Null' => [null]
+            'False' => [false]
         ];
     }
 
-    public function notFalseProvider()
+    public function falseProvider(): array
+    {
+        return [
+            'String number zero' => ['0'],
+            'Number zero' => [0],
+            'False' => [false]
+        ];
+    }
+
+    public function notFalseProvider(): array
     {
         return [
             'String number one' => ['1'],
@@ -464,14 +484,14 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function nullProvider()
+    public function nullProvider(): array
     {
         return [
             'Null' => [null]
         ];
     }
 
-    public function notNullProvider()
+    public function notNullProvider(): array
     {
         return [
             'Array' => [array()],
@@ -480,7 +500,7 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function arrayProvider()
+    public function arrayProvider(): array
     {
         return [
             'Array' => [array()],
@@ -489,7 +509,7 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function notArrayProvider()
+    public function notArrayProvider(): array
     {
         return [
             'String' => [''],
@@ -498,7 +518,7 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function emailProvider()
+    public function emailProvider(): array
     {
         return [
             'Valid e-mail' => ['test@test.com'],
@@ -508,12 +528,32 @@ class ValidatorHelperTest extends TestCase
         ];
     }
 
-    public function notEmailProvider()
+    public function notEmailProvider(): array
     {
         return [
             'Invalid e-mail without domain' => ['test'],
             'Invalid e-mail with only domain' => ['@test.com'],
             'Invalid e-mail with two at' => ['test@test@.com']
+        ];
+    }
+
+    public function urlProvider(): array
+    {
+        return [
+            'Valid URL' => ['http://www.google.com'],
+            'Valid URL with sub-domain' => ['http://test.google.com'],
+            'Valid URL with dashes' => ['http://test-google.com'],
+            'Valid URL with folders' => ['http://test.google.com/test']
+        ];
+    }
+
+    public function notUrlProvider(): array
+    {
+        return [
+            'Invalid URL with colon' => ['www::google.com'],
+            'Invalid URL with underscores' => ['__test.google.com'],
+            'Invalid URL with pipe' => ['http://test|google.com/test'],
+            'Invalid URL with no $' => ['test$$$google.com']
         ];
     }
 }

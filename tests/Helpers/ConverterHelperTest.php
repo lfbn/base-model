@@ -1,8 +1,9 @@
 <?php
 
-namespace Lfbn\BaseModel\Helpers;
+namespace Lfbn\BaseModel\Tests\Helpers;
 
 use PHPUnit\Framework\TestCase;
+use Lfbn\BaseModel\Helpers\ConverterHelper;
 
 class ConverterHelperTest extends TestCase
 {
@@ -24,7 +25,7 @@ class ConverterHelperTest extends TestCase
      * @param string $expectedOutput
      * @dataProvider shouldConvertFromCamelCaseToSnakeCaseProvider
      */
-    public function testShouldConvertFromCamelCaseToSnakeCase($input, $expectedOutput)
+    public function testShouldConvertFromCamelCaseToSnakeCase($input, $expectedOutput): void
     {
         $this->assertEquals(
             $this
@@ -34,7 +35,7 @@ class ConverterHelperTest extends TestCase
         );
     }
 
-    public function testShouldConvertFromObjectToArray()
+    public function testShouldConvertFromObjectToArray(): void
     {
         $object = new \stdClass();
         $object->id = 1;
@@ -48,7 +49,7 @@ class ConverterHelperTest extends TestCase
         );
     }
 
-    public function testShouldConvertFromObjectToArrayWithOnlyNotEmptyProps()
+    public function testShouldConvertFromObjectToArrayWithOnlyNotEmptyProps(): void
     {
         $object = new \stdClass();
         $object->id = 1;
@@ -62,7 +63,7 @@ class ConverterHelperTest extends TestCase
         );
     }
 
-    public function testShouldConvertFromObjectToJson()
+    public function testShouldConvertFromObjectToJson(): void
     {
         $object = new \stdClass();
         $object->id = 1;
@@ -77,7 +78,7 @@ class ConverterHelperTest extends TestCase
         );
     }
 
-    public function testShouldConvertFromObjectToJsonWithOnlyNotEmptyProps()
+    public function testShouldConvertFromObjectToJsonWithOnlyNotEmptyProps(): void
     {
         $object = new \stdClass();
         $object->id = '';
@@ -92,7 +93,7 @@ class ConverterHelperTest extends TestCase
         );
     }
 
-    public function shouldConvertFromCamelCaseToSnakeCaseProvider()
+    public function shouldConvertFromCamelCaseToSnakeCaseProvider(): array
     {
         return [
             ['camelCase', 'camel_case'],

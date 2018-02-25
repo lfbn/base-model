@@ -56,13 +56,13 @@ abstract class AbstractBaseModel
         IValidator $validator = null
     ) {
 
-        if (is_null($converter)) {
+        if (null === $converter) {
             $this->converter = new ConverterHelper();
         } else {
             $this->converter = $converter;
         }
 
-        if (is_null($validator)) {
+        if (null === $validator) {
             $this->validator = new ValidatorHelper();
         } else {
             $this->validator = $validator;
@@ -74,12 +74,13 @@ abstract class AbstractBaseModel
      *
      * @return array Should be in the following format: [['property' => 'id', 'validator' => 'isInteger' ]]
      */
-    abstract public function getValidationRules();
+    abstract public function getValidationRules(): array;
 
     /**
+     * @throws \InvalidArgumentException
      * @return array
      */
-    public function validate()
+    public function validate(): array
     {
         if (!$this->isValidating) {
             return [];
@@ -98,7 +99,7 @@ abstract class AbstractBaseModel
                 }
                 if ($this->validatingThrowingExceptions) {
                     throw new \InvalidArgumentException(
-                        "Base Model: " . $message
+                        'Base Model: ' . $message
                     );
                 }
                 $this->errors[] = $message;
@@ -118,7 +119,7 @@ abstract class AbstractBaseModel
     /**
      * @param bool $value
      */
-    public function setIsValidating(bool $value)
+    public function setIsValidating(bool $value): void
     {
         $this->isValidating = $value;
     }
@@ -139,12 +140,18 @@ abstract class AbstractBaseModel
         $this->validatingThrowingExceptions = $validatingThrowingExceptions;
     }
 
-    public function setConverter(IConverter $converter)
+    /**
+     * @param IConverter $converter
+     */
+    public function setConverter(IConverter $converter): void
     {
         $this->converter = $converter;
     }
 
-    public function setValidator(IValidator $validator)
+    /**
+     * @param IValidator $validator
+     */
+    public function setValidator(IValidator $validator): void
     {
         $this->validator = $validator;
     }
@@ -153,7 +160,7 @@ abstract class AbstractBaseModel
      * @param array $data
      * @return bool
      */
-    public function setData(array $data)
+    public function setData(array $data): bool
     {
         if (empty($data)) {
             return false;
@@ -169,7 +176,7 @@ abstract class AbstractBaseModel
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->converter->fromObjectToArray($this);
     }
@@ -177,7 +184,7 @@ abstract class AbstractBaseModel
     /**
      * @return array
      */
-    public function toArrayWithNoEmptyProperties()
+    public function toArrayWithNoEmptyProperties(): array
     {
         return $this->converter->fromObjectToArray($this, true);
     }

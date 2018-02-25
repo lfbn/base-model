@@ -20,6 +20,7 @@ This is a Base Model that can be extended to define Models. It helps handling da
   * isNull
   * isNotNull
   * isArray
+  * isEmail
 * Model to array and JSON, preserving hidden attributes.
 * Define attributes using arrays of data.
 * Can define, when validation fails, if an exception is thrown.

@@ -1,126 +1,25 @@
 <?php
 
-namespace Lfbn\BaseModel;
+namespace Lfbn\BaseModel\Tests;
 
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 use Lfbn\BaseModel\Helpers\ValidatorHelper;
+use Lfbn\BaseModel\IConverter;
+use Lfbn\BaseModel\Tests\Mocks\UserModelMock;
 
-class ModelUser extends AbstractBaseModel
+class AbstractBaseModelTest extends TestCase
 {
 
     /**
-     * @var int
-     */
-    protected $id;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var float
-     */
-    protected $height;
-
-    /**
-     * @var boolean
-     */
-    protected $active;
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return float
-     */
-    public function getHeight(): float
-    {
-        return $this->height;
-    }
-
-    /**
-     * @param float $height
-     */
-    public function setHeight(float $height): void
-    {
-        $this->height = $height;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive(): bool
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param bool $active
-     */
-    public function setActive(bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @return array
-     */
-    public function getValidationRules()
-    {
-        return [
-            ['property' => 'id', 'validator' => 'isNotEmpty'],
-            ['property' => 'id', 'validator' => 'isInteger'],
-            ['property' => 'name', 'validator' => 'isString'],
-            ['property' => 'height', 'validator' => 'isFloat'],
-            ['property' => 'active', 'validator' => 'isBoolean']
-        ];
-    }
-}
-
-// @codingStandardsIgnoreStart
-class BaseModelTest extends TestCase
-{
-    // @codingStandardsIgnoreEnd
-    /**
-     * @var ModelUser
+     * @var UserModelMock
      */
     protected $userMock;
 
     public function setUp()
     {
         $this->userMock = \Mockery::mock(
-            ModelUser::class
+            UserModelMock::class
         )->makePartial();
     }
 
@@ -129,20 +28,20 @@ class BaseModelTest extends TestCase
         \Mockery::close();
     }
 
-    public function testIsValidatingShouldDefaultsToTrue()
+    public function testIsValidatingShouldDefaultsToTrue(): void
     {
         $this->assertTrue(
             $this->userMock->isValidating()
         );
     }
 
-    public function testShouldAllowToDefineIfIsValidating()
+    public function testShouldAllowToDefineIfIsValidating(): void
     {
         $this->userMock->setIsValidating(false);
         $this->assertFalse($this->userMock->isValidating());
     }
 
-    public function testShouldWhenNotValidatingAtValidateReturnEmptyArray()
+    public function testShouldWhenNotValidatingAtValidateReturnEmptyArray(): void
     {
         $this->userMock->setIsValidating(false);
         $this->assertEquals(
@@ -151,9 +50,9 @@ class BaseModelTest extends TestCase
         );
     }
 
-    public function testShouldWhenValidatingReturnEmptyArrayWhenAllPropsAreValid()
+    public function testShouldWhenValidatingReturnEmptyArrayWhenAllPropsAreValid(): void
     {
-        $validator = \Mockery::Mock(ValidatorHelper::class);
+        $validator = \Mockery::mock(ValidatorHelper::class);
         $validator->shouldReceive([
             'isNotEmpty' => true,
             'isInteger' => true,
@@ -168,9 +67,9 @@ class BaseModelTest extends TestCase
         );
     }
 
-    public function testShouldWhenValidatingReturnErrorsWhenExistsInvalidProps()
+    public function testShouldWhenValidatingReturnErrorsWhenExistsInvalidProps(): void
     {
-        $validator = \Mockery::Mock(ValidatorHelper::class);
+        $validator = \Mockery::mock(ValidatorHelper::class);
         $validator->shouldReceive([
             'isNotEmpty' => false,
             'isInteger' => true,
@@ -188,7 +87,7 @@ class BaseModelTest extends TestCase
         );
     }
 
-    public function testShouldWhenValidatingNotToThrowExceptionsByDefault()
+    public function testShouldWhenValidatingNotToThrowExceptionsByDefault(): void
     {
         $this->assertFalse(
             $this->userMock->isValidatingThrowingExceptions()
@@ -198,9 +97,9 @@ class BaseModelTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testShouldAllowWhenValidatingToThrowExceptionsWhenValidatingFails()
+    public function testShouldAllowWhenValidatingToThrowExceptionsWhenValidatingFails(): void
     {
-        $validator = \Mockery::Mock(ValidatorHelper::class);
+        $validator = \Mockery::mock(ValidatorHelper::class);
         $validator->shouldReceive('isInteger')->andReturn(false);
         $this->userMock->setValidator($validator);
 
@@ -212,7 +111,7 @@ class BaseModelTest extends TestCase
         $this->userMock->validate();
     }
 
-    public function testShouldBePossibleToPopulateData()
+    public function testShouldBePossibleToPopulateData(): void
     {
         $this->userMock->setData(['id' => 1]);
         $this->assertEquals(
@@ -226,12 +125,12 @@ class BaseModelTest extends TestCase
      * @expectedException Error
      * @dataProvider invalidValuesProvider
      */
-    public function testShouldValidateDataWhenBeingPopulated($expected)
+    public function testShouldValidateDataWhenBeingPopulated($expected): void
     {
         $this->expectException($this->userMock->setData($expected));
     }
 
-    public function testShouldConvertToArray()
+    public function testShouldConvertToArray(): void
     {
         $converterMock = \Mockery::mock(
             IConverter::class
@@ -246,7 +145,7 @@ class BaseModelTest extends TestCase
         );
     }
 
-    public function testShouldConvertToJson()
+    public function testShouldConvertToJson(): void
     {
         $converterMock = \Mockery::mock(
             IConverter::class
@@ -264,7 +163,7 @@ class BaseModelTest extends TestCase
     /**
      * @return array
      */
-    public function invalidValuesProvider()
+    public function invalidValuesProvider(): array
     {
         return [
             [

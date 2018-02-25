@@ -5,9 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Add the following validator isUrl.
 - Refactor unit tests to mock also PHP built-in methods.
 - Add type casting.
+
+## [1.0.5] - 2018-02-25
+### Added
+- Add the isUrl validator.
+- Add var dump check.
+- Define return type for several methods.
 
 ## [1.0.4] - 2018-02-21
 ### Added
