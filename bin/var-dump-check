@@ -1,1 +1,4 @@
-../vendor/jakub-onderka/php-var-dump-check/var-dump-check
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/var-dump-check.php';
